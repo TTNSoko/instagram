@@ -1,6 +1,6 @@
 import express from "express";
 import bcrypt from "bcrypt";
-import userModel from "../models/user-model.js";
+import UserModel from "../models/user-model.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { authMiddleware } from "../middlewares/auth-middleware.js";
@@ -43,7 +43,7 @@ sign.post("/signup", async (req, res) => {
     });
   }
 
-  const existingUser = await userModel.findOne({ username: username });
+  const existingUser = await UserModel.findOne({ username: username });
   if (existingUser) {
     return res
       .status(400)
@@ -60,7 +60,7 @@ sign.post("/signup", async (req, res) => {
   }
 
   if (isPhoneNumber) {
-    const existingUser = await userModel.findOne({ phone: credential });
+    const existingUser = await UserModel.findOne({ phone: credential });
     if (existingUser) {
       return res
         .status(400)
@@ -73,14 +73,14 @@ sign.post("/signup", async (req, res) => {
           password: hash,
           username: username,
         };
-        await userModel.create(newUser);
+        await UserModel.create(newUser);
         return res.status(201).send(newUser);
       });
     }
   }
 
   if (isEmail) {
-    const existingUser = await userModel.findOne({ email: credential });
+    const existingUser = await UserModel.findOne({ email: credential });
     if (existingUser) {
       return res
         .status(400)
@@ -93,7 +93,7 @@ sign.post("/signup", async (req, res) => {
           password: hash,
           username: username,
         };
-        await userModel.create(newUser);
+        await UserModel.create(newUser);
         return res.status(201).send(newUser);
       });
     }
@@ -105,11 +105,11 @@ sign.post("/signin", async (req, res) => {
   let existingUser = null;
 
   if (checkPhoneNumber(credential)) {
-    existingUser = await userModel.findOne({ phone: credential });
+    existingUser = await UserModel.findOne({ phone: credential });
   } else if (checkEmail(credential)) {
-    existingUser = await userModel.findOne({ email: credential });
+    existingUser = await UserModel.findOne({ email: credential });
   } else {
-    existingUser = await userModel.findOne({ username: credential });
+    existingUser = await UserModel.findOne({ username: credential });
   }
 
   if (!existingUser)
