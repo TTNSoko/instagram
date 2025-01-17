@@ -3,10 +3,8 @@ import { redirect } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "./contexts/user-context";
 import axios from "axios";
-import Image from "next/image";
-import Link from "next/link";
-import { Header } from "./common/Header";
-import { Footer } from "./common/Footer";
+import { MainLayout } from "./common/MainLayout";
+import { PostCard } from "./common/PostCard";
 
 export default function Home() {
   const { user } = useContext(UserContext);
@@ -22,27 +20,14 @@ export default function Home() {
     return redirect("/signin");
   }
   return (
-    <div>
-      <Header />
-      <ul>
-        {posts.map((post) => (
-          <li key={post.id}>
-            <Image
-              width={400}
-              objectFit="contain"
-              height={400}
-              src={post.mediaURL}
-              alt=""
-            />
-            {post.description}
-            <br />
-            <Link className="text-blue-500 " href={`${post.user.username}`}>
-              @{post.user.username}
-            </Link>
-          </li>
-        ))}
+    <MainLayout>
+      <ul className="grid grid-cols-1 gap-4">
+        {posts
+          .filter((post) => Boolean(post.mediaURL))
+          .map((post) => (
+            <PostCard key={post._id} post={post} />
+          ))}
       </ul>
-      <Footer />
-    </div>
+    </MainLayout>
   );
 }

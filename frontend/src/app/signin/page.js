@@ -19,7 +19,13 @@ export default function SigninPage() {
 
   return (
     <div className="flex items-center justify-center w-full min-h-screen flex-col">
-      <Image width={175} height={51} src="/igwrittenlogo.svg" className="pt-9 pb-3" alt="" />
+      <Image
+        width={175}
+        height={51}
+        src="/igwrittenlogo.svg"
+        className="pt-9 pb-3"
+        alt=""
+      />
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -32,16 +38,16 @@ export default function SigninPage() {
             })
             .then((res) => {
               toast.success("Successfully entered.");
-              setAccessToken(res.data.setAccessToken);
+              setAccessToken(res.data.accessToken);
             })
             .catch((err) => {
               console.error(err);
               toast.error(err.response.data.message);
             });
         }}
-        className="flex flex-col pt-6 "
+        className="flex flex-col gap-4 "
       >
-        <label className="flex flex-col pb-[6px] ">
+        <label className="flex flex-col">
           <input
             name="credential"
             type="string"
@@ -49,7 +55,7 @@ export default function SigninPage() {
             placeholder="Phone number, username, or email"
           />
         </label>
-        <label className="flex flex-col pb-12">
+        <label className="flex flex-col">
           <input
             name="password"
             type="password"
@@ -58,10 +64,10 @@ export default function SigninPage() {
           />
         </label>
         <button className="text-white font-bold bg-[#0095f6] rounded-lg px-4 py-2 ">
-          Log in
+          Log In
         </button>
       </form>
-      <div className="my-4 text-[#A8A8A8] text-sm py-4 ">
+      <div className="my-4 text-[#A8A8A8] text-sm py-4">
         Do not have an account?{" "}
         <Link href={"/signup"} className="text-[#0095f6] font-bold">
           Sign up

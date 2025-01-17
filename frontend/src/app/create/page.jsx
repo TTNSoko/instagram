@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import { ImageUploader } from "./ImageUploader";
 import { UserContext } from "../contexts/user-context";
+import { IoIosArrowBack } from "react-icons/io";
 
 const CreatePage = () => {
   const { accessToken } = useContext(UserContext);
@@ -37,7 +38,7 @@ const CreatePage = () => {
   return (
     <>
       <header className="flex justify-between p-4">
-        <button onClick={() => router.back()}> back </button>
+        <button onClick={() => router.back()}> <IoIosArrowBack /> </button>
         <p>New Post</p>
         <button onClick={handleSubmit}>Share</button>
       </header>
